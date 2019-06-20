@@ -1,0 +1,121 @@
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
+body{
+    background-color: midnightblue;
+}
+
+.login-cred{
+    position:sticky;
+    z-index: auto;
+    text-align: center;
+}
+
+#log-username{
+    width:300px;
+    margin: 10px;
+}
+
+#log-password{
+    width:300px;
+    margin: 10px;
+}
+
+#username{
+    color:white;
+    font-size: 20px;
+    font-family:sans-serif;
+}
+
+#password{
+    color:white;
+    font-size: 20px;
+    font-family:sans-serif;
+}
+
+#log-submit{
+    background-color: cadetblue;
+    margin:10px;
+    width: 100px;
+}
+
+.anim-bubbles{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:auto;
+    transform: translateZ(0);
+}
+
+.anim-bubbles li{
+    position:absolute;
+    list-style: none;
+    display: block;
+    background-color: white;
+    border-radius: 50%;
+    bottom: -100px;
+    opacity: 0.15;
+    animation: square 20s infinite;
+    transition-timing-function: linear;
+}
+
+.anim-bubbles li:nth-child(1){
+    width:40px;
+    height:40px;
+    left:20%;
+}
+
+.anim-bubbles li:nth-child(2){
+    width:60px;
+    height:60px;
+    left:40%;
+    animation-delay: 2s;
+    animation-duration: 17s;
+}
+
+.anim-bubbles li:nth-child(3){
+    width:10px;
+    height:10px;
+    left:60%;
+    animation-delay: 4s;
+    animation-duration: 13s;
+} 
+
+    .anim-bubbles li:nth-child(4){
+        width:80px;
+        height:80px;
+        left:80%;
+        animation-delay: 1s;
+        animation-duration: 22s;
+    } 
+
+.anim-bubbles li:nth-child(5){
+    width:50px;
+    height:50px;
+    left:50%;
+    animation-delay: 7s;
+    animation-duration: 12s;
+} 
+
+@keyframes square{
+    0%{
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    } 
+    
+    100% {
+        -webkit-transform: translateY(-1080px) rotate(630deg);
+        transform: translateY(-1080px) rotate(630deg);
+    }
+}
