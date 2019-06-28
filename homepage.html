@@ -1,32 +1,74 @@
 <html lang="en"><head>
     <link rel="stylesheet" href="homepage.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>Krusty Krab</title>
 </head>
 <body>
-    <div id="main">
-        <nav>
-            <p id="krustykrab">
-                <img class="logo" src="view/krustykrablogo.png" alt="krustykrablogo"> <span id="name">Krusty Krab</span> 
-            </p>
-            <ul>
-                <li><a href="homepage.html">Home</a></li>
-                <li><a href="profile.html">Profile</a></li>
-                <li><a href="#">Sales Data</a>
-                    <ul>
-                        <li><a href="customersserved.html">Customers Served</a></li>
-                        <li><a href="grubpopularity.html">Grub Popularity</a></li>
-                        <li><a href="perspecies.html">Grub Preference per Species</a></li>
-                    </ul>
-                </li>
-                <li><a href="about.html">About Mr. Krabs</a></li>
-                <li><a href="upload.html">Upload Data</a></li>
-            </ul>
-            
-        </nav>
-        <div id="content">
-            Content here
+    <nav>
+        <p id="krustykrab">
+            <img class="logo" src="view/krustykrablogo.png" alt="krustykrablogo"> <span id="name">Krusty Krab</span> 
+        </p>
+        <ul>
+            <li><a href="homepage.html">HOME</a></li>
+            <li><a href="profile.html">PROFILE</a></li>
+            <li><a href="#">SALES DATA</a>
+                <ul>
+                    <li><a href="customersserved.html">CUSTOMERS SERVED</a></li>
+                    <li><a href="grubpopularity.html">GRUB POPULARITY</a></li>
+                    <li><a href="perspecies.html">GRUB PREFERENCE PER SPECIES</a></li>
+                </ul>
+            </li>
+            <li><a href="about.html">ABOUT MR. KRABS</a></li>
+            <li><a href="upload.html">UPLOAD DATA</a></li>
+        </ul>
+        
+    </nav>
+    <div id="container">
+        <div class="chartcontainer">
+            <canvas class="charts" id="customersserved">Customers Served</canvas>
+            Customers Served
         </div>
+
+        <div class="chartcontainer">
+            <canvas class="charts" id="grubpopularity">Grub Popularity</canvas>
+            Grub Popularity
+        </div>
+
+        <div class="chartcontainer">
+            <canvas class="charts" id="perspecies">Grub Preference per Species</canvas>
+            Grub Preference per Species
+        </div>
+        
     </div>
+
+    <script>
+        let customersservedChart = document.getElementById('customersserved').getContext('2d');
+        let grubpopularityChart = document.getElementById('grubpopularity').getContext('2d');
+        let perspeciesChart = document.getElementById('perspecies').getContext('2d');
+
+        let CS_Chart = new Chart(customersservedChart, {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [],
+            },
+            options: {}
+        });
+
+        let GP_Chart = new Chart(grubpopularityChart, {
+            type: 'bar',
+            data: {},
+            options: {}
+        });
+
+        let PS_Chart = new Chart(perspeciesChart, {
+            type: 'bar',
+            data: {},
+            options: {}
+        });
+    </script>
+
     
 
 </body></html>
