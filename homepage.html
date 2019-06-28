@@ -2,6 +2,7 @@
     <link rel="stylesheet" href="homepage.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    
     <title>Krusty Krab</title>
 </head>
 <body>
@@ -26,18 +27,15 @@
     </nav>
     <div id="container">
         <div class="chartcontainer">
-            <canvas class="charts" id="customersserved">Customers Served</canvas>
-            Customers Served
+            <canvas class="charts" id="customersserved">Customers Served</canvas>            
         </div>
 
         <div class="chartcontainer">
-            <canvas class="charts" id="grubpopularity">Grub Popularity</canvas>
-            Grub Popularity
+            <canvas class="charts" id="grubpopularity">Grub Popularity</canvas>            
         </div>
 
         <div class="chartcontainer">
             <canvas class="charts" id="perspecies">Grub Preference per Species</canvas>
-            Grub Preference per Species
         </div>
         
     </div>
@@ -47,25 +45,127 @@
         let grubpopularityChart = document.getElementById('grubpopularity').getContext('2d');
         let perspeciesChart = document.getElementById('perspecies').getContext('2d');
 
+        Chart.defaults.global.defaultFontSize = 12;
+        Chart.defaults.global.defaultFontColor = '#777';
+
         let CS_Chart = new Chart(customersservedChart, {
-            type: 'bar',
+            type: 'line',
             data: {
-                labels: [],
-                datasets: [],
+                labels: ['8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm'],
+                datasets: [{
+                    label: 'Number of Customers',
+                    data:[
+                        10, 12, 32, 4, 5, 23, 13, 10
+                    ]
+                }],
             },
-            options: {}
+            options: {
+                title:{
+                    display: true,
+                    text: 'Customers Served',
+                    fontSize: 16
+                },
+                // layout:{
+                //     padding:{
+                //         left: 50,
+                //         right: 0,
+                //         bottom:0,
+                //         top: 0
+                //     }
+                // }
+            },
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderWidth: 4,
+            borderColor: '#777',
+            hoverBorderWidth: 3,
+            hoverBorderColor: '#000'
         });
 
         let GP_Chart = new Chart(grubpopularityChart, {
-            type: 'bar',
-            data: {},
-            options: {}
+            type: 'line',
+            data: {
+                labels: ['Krabby Patty', 'Krusty Combo', 'Krusty Deluxe', ],
+                datasets: [{
+                    label: 'Number of Grub Orders',
+                    data:[
+                        250, 700, 412
+                    ]
+                }],
+            },
+            options: {
+                title:{
+                    display: true,
+                    text: 'Grub Popularity',
+                    fontSize: 16
+                },
+                // layout:{
+                //     padding:{
+                //         left: 50,
+                //         right: 0,
+                //         bottom:0,
+                //         top: 0
+                //     }
+                // }
+            },
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderWidth: 4,
+            borderColor: '#777',
+            hoverBorderWidth: 3,
+            hoverBorderColor: '#000'
         });
 
         let PS_Chart = new Chart(perspeciesChart, {
-            type: 'bar',
-            data: {},
-            options: {}
+            type: 'line',
+            data: {
+                labels: ['Squid', 'Sponge', 'Starfish', 'Whale', 'Lobster', 'Milkfish'],
+                datasets: [{
+                    label: 'Grub Preference per Species',
+                    data:[
+                        
+                    ]
+                }],
+            },
+            options: {
+                title:{
+                    display: true,
+                    text: 'Grub Popularity Per Species',
+                    fontSize: 16
+                },
+                // layout:{
+                //     padding:{
+                //         left: 50,
+                //         right: 0,
+                //         bottom:0,
+                //         top: 0
+                //     }
+                // }
+            },
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderWidth: 4,
+            borderColor: '#777',
+            hoverBorderWidth: 3,
+            hoverBorderColor: '#000'
         });
     </script>
 

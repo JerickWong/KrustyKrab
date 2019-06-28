@@ -103,7 +103,7 @@ nav ul li ul li a:hover{
     margin: 20px;
     height: 83%;
     /* width: 97%; */
-    opacity: 0.9;
+    opacity: 0.8;
     position: relative;
 }
 
@@ -111,8 +111,8 @@ nav ul li ul li a:hover{
     display: inline-block;
     padding: 30px;
     margin-top: 200px;
-    margin-left: 118px;
-    width: 400px;
-    background-color: rgb(83, 126, 145);
-    color: white;
+    margin-left: 43px;
+    width: 500px;
+    background-color: rgb(200, 235, 250);
+    color: black;
 }
