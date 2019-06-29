@@ -1,5 +1,5 @@
 <html lang="en"><head>
-    <link rel="stylesheet" href="homepage.css">
+    <link rel="stylesheet" href="upload.css">
     <title>Krusty Krab</title>
 </head>
 <body>
@@ -23,9 +23,46 @@
             </ul>
             
         </nav>
-        <div id="content">
-            Content here
-        </div>
+        <article class="content">
+            <p><h1>Upload JSON File</h1></p>
+            <p><img id='bodyimg' src="view/krustykrab.jpg" alt="krustykrab"></p>
+            <p id="msg">Help us improve Krusty Krab</p>
+            <div class="upload">
+                <input id="contentFile" type="file" accept="application/json" />
+            </div>
+            <div>
+                <button>Submit File</button>
+            </div>
+            
+            <script>
+                document.getElementById('contentFile').onchange = function(e) {
+                try {
+                    let files = e.target.files;
+                    if (!files.length) {
+                        alert('No file selected!');
+                        return;
+                    }
+                    if (!files.JSON){
+                        alert('Upload .json files only')
+                        return;
+                    }
+                    else {
+                        let file = files[0];
+                        let reader = new FileReader();
+                        const self = this;
+                        reader.onload = (event) => {
+                            console.log('FILE CONTENT', event.target.result);
+                        };
+                        reader.readAsText(file);
+                    }
+                    
+                } catch (err) {
+                    console.error(err);
+                }
+            }
+            </script>
+            
+        </article>
     </div>
     
 
