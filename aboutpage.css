@@ -146,37 +146,40 @@ nav ul li ul li a:hover{
 }
 
 #main-pride-img{
-    width: 300px;
+    width: 350px;
     height: 250px;
-    margin-right: 5px;
     border-radius: 50%;
     background: rgba(229, 229, 255, 0.7);
+    border: solid black;
 }
 
 #main-employ1-img{
-    width: 300px;
+    width: 350px;
     height: 250px;
-    margin-right: 5px;
     border-radius: 50%;
     background: rgba(229, 229, 255, 0.7);
+    border: solid black;
 }
 
 #main-employ2-img{
-    width: 300px;
+    width: 350px;
     height: 250px;
-    margin-right: 5px;
     border-radius: 50%;
     background: rgba(229, 229, 255, 0.7);
+    border: solid black;
 }
 
 #main-krabs-name{  
    margin: 20px; 
+    font-size: 25px;
     color: black;
 }
 
 h1{
-    margin-top: 20px;
+    padding: 20px;
     font-family: Verdana;
+    background-color: black;
+    color: white;
 }
 
 #about-krabs{
@@ -196,4 +199,14 @@ h1{
     margin-left: 200px;
     text-align: justify;
     color: rgb(229, 229, 255);
+}
+
+.main-krabsemploy-desc{
+    color:white;
+    font-family: Verdana;
+    text-align: center;
+    font-size: 25px;
+    background-color: black;
+    margin-left: 65px;
+    margin-right: 65px;
 }

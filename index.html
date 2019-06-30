@@ -1,28 +1,54 @@
 
 <html>
     <head>
-        <title>The Krusty Krab</title>
+        <title>Krusty Krab</title>
         <link href="index-style.css" type="text/css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
     
     
     <body>
-        <h1>The Krusty Krab</h1>
+        <div class="header">
+            <span>
+                <h1 id="log-header">
+                    <img src="assets/log-head.png" alt="krustykrab" class="log-head-krabs">
+                    The Krusty Krab Website
+                </h1>
+            </span>
+        </div>
         
+        <div class="login-cred">
+            <img src="assets/profile.png" alt="avatar" class="log-avatar"><br>
+            
+            <div id="username">
+                <img src="assets/user.png" alt="avatar-username" class="log-avun"> 
+                <input type="text" id="log-username" placeholder="Your username">
+                <br>
+            </div>
+            
+            <div id="password">
+                <img src="assets/lock.png" alt="avatar-password" class="log-avun">
+                <input type="password" id="log-password" placeholder="Your password">
+            <br>      
+            </div>
+            <form action="homepage.html" target="_blank">
+                <input type="submit" value="Login" id="log-submit"><br>
+            </form>
+        </div>
+        
+        <div class="credit-link">Icons made by <a href="https://www.flaticon.com/authors/lucy-g" title="Lucy G">Lucy G</a>, <a href="https://www.flaticon.com/authors/roundicons" title="Roundicons">Roundicons</a>,  <a href="https://www.flaticon.com/authors/srip" title="srip">srip</a> 
+            and  <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons">Those Icons</a> 
+            from <a href="https://www.flaticon.com/"                 title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"                 title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+        <br>
+<!--
         <ul class="anim-bubbles">
             <li></li>
             <li></li>
-            <li></li>
+            <li></li>   
             <li></li>
         </ul>
+-->
         
-        <div class="login-cred">
-        <span id="username">Username: </span><input type="text" id="log-username"><br>
-        <span id="password">Password: </span><input type="password" id="log-password"><br>
-        <input type="submit" id="log-submit"><br>
-        </div>
-        
-<!--        <img src="assets/login-kk.jpg" id="login-backdrop">-->
         
     </body>
     
