@@ -117,6 +117,7 @@ nav ul li ul li a:hover{
     margin: 10px;
     margin-top: 20px;
     margin-right: 30px;
+    margin-left: 20px;
     position: static;
     box-shadow: 0 10px 6px -6px #777;
     border-radius: 50%;
