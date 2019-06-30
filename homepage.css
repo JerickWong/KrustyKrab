@@ -32,9 +32,10 @@ nav{
 }
 
 .logo{
-    width: 60px;
-    border-radius: 50px;
-    margin: 13px;
+    width: 45px;
+    border-radius: 23px;
+    margin: 10px;
+    margin-left: 11.5px;
     position: absolute;
 }
 #name{
