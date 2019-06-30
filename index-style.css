@@ -73,10 +73,11 @@ body{
     margin-left: 34px;
     font-size: 20px;
     border: 1px solid #000000;
+    background: rgba(233,150,122, 0.8);
 }
 
 #log-submit:hover{
-    background: rgba(68, 85, 90, 0.2);
+    background: rgba(68, 85, 90, 0.5);
 }
 
 .log-head-krabs{
