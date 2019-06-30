@@ -18,7 +18,7 @@ body{
     /* background-color: rgb(185, 185, 185); */
     background-image: url("view/background-1.jpg");
     background-repeat: no-repeat;
-    background-size: 1800px 1500px;
+    background-size: 1561px 1291px;
     background-position: center;
 }
 
@@ -26,37 +26,38 @@ nav{
     margin-top: 0px;
     background-color: #0457A0;
     
-    height: 80px;
+    height: 70px;
     width: 100%;
 }
 
 .logo{
-    width: 50px;
-    border-radius: 50px;
-    margin: 13px;
+    width: 45px;
+    border-radius: 23px;
+    margin: 10px;
+    margin-left: 11.5px;
     position: absolute;
 }
 
 #name{
     /* padding: 12px 0px 20px 55px; */
     margin: 22px;
-    margin-left: 78px;
+    margin-left: 70px;
     position: absolute;
     color: #E4000F;
-    font-size: 25px;
+    font-size: 22.5px;
     float: left;
     font-family: Krabby Patty;
 }
 
 nav ul{
-    padding-top: 20px;
-    padding-left: 230px;
+    padding-top: 18px;
+    padding-left: 206.5px;
     float:left;
-    font-size: 15px;
+    font-size: 10px;
 }
 nav ul li{
     margin-left: 20px;
-    padding: 10px 10px;
+    padding: 10px 8px;
     float: left;
     list-style: none;
     position: relative;
@@ -64,7 +65,7 @@ nav ul li{
 nav ul li a{
     text-decoration: none;
     color: white;
-    font-size: 15px;
+    font-size: 13.5px;
     display: block;
     transition: color .2s ease;
 }
@@ -87,7 +88,7 @@ nav ul li ul{
     background-color:  rgb(83, 126, 145);
     padding: 5px;
     border-radius: 0px 0px 10px 10px;
-    top: 40px;
+    top: 34px;
     left: 0%;
     z-index: 9999;
 }
@@ -96,12 +97,12 @@ nav ul li:hover ul{
     display: block;
 }
 nav ul li ul li{
-    width: 180px;
+    width: 149px;
     margin-left: 0px;
     border-radius: 10px;
 }
 nav ul li ul li a{
-    font-size: 12px;
+    font-size: 11.5px;
     color: white;
     padding-top: 5px;
     padding-bottom: 5px;
