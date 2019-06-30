@@ -1,5 +1,6 @@
 <html lang="en"><head>
     <link rel="stylesheet" href="SD-grubpopu.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     <title>Krusty Krab</title>
 </head>
 <body>
@@ -23,9 +24,153 @@
             </ul>
             <a href="index.html"><button type="button" id="btn-logout"><img src="assets/logout.png" id="img-logout">&nbsp;Log Out</button></a>
         </nav>
-        <div id="content">
-            Content here
-        </div>
+                
+        <div id="container">
+                <div class="sortby">Sort By: <input type="date" id="date"></div>
+                
+                <div class="chartcontainer">
+                    <canvas class="charts" id="bar"></canvas>            
+                </div>
+    
+                <div class="chartcontainer">
+                    <canvas class="charts" id="line"></canvas>            
+                </div>
+    
+                <div class="chartcontainer">
+                    <canvas class="charts" id="scatter"></canvas>
+                </div>
+                
+            </div>
+    
+            <script>
+                let CSBar = document.getElementById('bar').getContext('2d');
+                let CSLine = document.getElementById('line').getContext('2d');
+                let CSScatter = document.getElementById('scatter').getContext('2d');
+    
+                Chart.defaults.global.defaultFontSize = 12;
+                Chart.defaults.global.defaultFontColor = '#777';
+    
+                let CS_Bar = new Chart(CSBar, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Krabby Patty', 'Krusty Combo', 'Krusty Deluxe', ],
+                        datasets: [{
+                            label: 'Number of Grub Orders',
+                            data:[
+                                250, 700, 412
+                            ]
+                        }],
+                    },
+                    options: {
+                        title:{
+                            display: true,
+                            text: 'Grub Popularity',
+                            fontSize: 16
+                        },
+                        // layout:{
+                        //     padding:{
+                        //         left: 50,
+                        //         right: 0,
+                        //         bottom:0,
+                        //         top: 0
+                        //     }
+                        // }
+                    },
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderWidth: 4,
+                    borderColor: '#777',
+                    hoverBorderWidth: 3,
+                    hoverBorderColor: '#000'
+                });
+    
+                let CS_Line = new Chart(CSLine, {
+                    type: 'line',
+                    data: {
+                        labels: ['Krabby Patty', 'Krusty Combo', 'Krusty Deluxe', ],
+                        datasets: [{
+                            label: 'Number of Grub Orders',
+                            data:[
+                                250, 700, 412
+                            ]
+                        }],
+                    },
+                    options: {
+                        title:{
+                            display: true,
+                            text: 'Grub Popularity',
+                            fontSize: 16
+                        },
+                        // layout:{
+                        //     padding:{
+                        //         left: 50,
+                        //         right: 0,
+                        //         bottom:0,
+                        //         top: 0
+                        //     }
+                        // }
+                    },
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderWidth: 4,
+                    borderColor: '#777',
+                    hoverBorderWidth: 3,
+                    hoverBorderColor: '#000'
+                });
+    
+                let CS_Scatter = new Chart(CSScatter, {
+                    type: 'bubble',
+                    data: {
+                        labels: ['Krabby Patty', 'Krusty Combo', 'Krusty Deluxe', ],
+                        datasets: [{
+                            label: 'Number of Grub Orders',
+                            data:[
+                                250, 700, 412
+                            ]
+                        }],
+                    },
+                    options: {
+                        title:{
+                            display: true,
+                            text: 'Grub Popularity',
+                            fontSize: 16
+                        },
+                        // layout:{
+                        //     padding:{
+                        //         left: 50,
+                        //         right: 0,
+                        //         bottom:0,
+                        //         top: 0
+                        //     }
+                        // }
+                    },
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderWidth: 4,
+                    borderColor: '#777',
+                    hoverBorderWidth: 3,
+                    hoverBorderColor: '#000'
+                });
+            </script>
+    
     </div>
     
 

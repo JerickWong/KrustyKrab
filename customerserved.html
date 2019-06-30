@@ -1,5 +1,6 @@
 <html lang="en"><head>
     <link rel="stylesheet" href="SD-custserv.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     <title>Krusty Krab</title>
 </head>
 <body>
@@ -23,9 +24,154 @@
             </ul>
             <a href="index.html"><button type="button" id="btn-logout"><img src="assets/logout.png" id="img-logout">&nbsp;Log Out</button></a>
         </nav>
-        <div id="content">
-            Content here
+        
+        <div id="container">
+            <div class="sortby">Sort By: <input type="date" id="date"></div>
+            
+            <div class="chartcontainer">
+                <canvas class="charts" id="bar"></canvas>            
+            </div>
+
+            <div class="chartcontainer">
+                <canvas class="charts" id="line"></canvas>            
+            </div>
+
+            <div class="chartcontainer">
+                <canvas class="charts" id="scatter"></canvas>
+            </div>
+            
         </div>
+
+        <script>
+            let CSBar = document.getElementById('bar').getContext('2d');
+            let CSLine = document.getElementById('line').getContext('2d');
+            let CSScatter = document.getElementById('scatter').getContext('2d');
+
+            Chart.defaults.global.defaultFontSize = 12;
+            Chart.defaults.global.defaultFontColor = '#777';
+
+            let CS_Bar = new Chart(CSBar, {
+                type: 'line',
+                data: {
+                    labels: ['8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm'],
+                    datasets: [{
+                        label: 'Number of Customers',
+                        data:[
+                            10, 12, 32, 4, 5, 23, 13, 10
+                        ]
+                    }],
+                },
+                options: {
+                    title:{
+                        display: true,
+                        text: 'Customers Served',
+                        fontSize: 16
+                    },
+                    // layout:{
+                    //     padding:{
+                    //         left: 50,
+                    //         right: 0,
+                    //         bottom:0,
+                    //         top: 0
+                    //     }
+                    // }
+                },
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderWidth: 4,
+                borderColor: '#777',
+                hoverBorderWidth: 3,
+                hoverBorderColor: '#000'
+            });
+
+            let CS_Line = new Chart(CSLine, {
+                type: 'line',
+                data: {
+                    labels: ['8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm'],
+                    datasets: [{
+                        label: 'Number of Customers',
+                        data:[
+                            10, 12, 32, 4, 5, 23, 13, 10
+                        ]
+                    }],
+                },
+                options: {
+                    title:{
+                        display: true,
+                        text: 'Customers Served',
+                        fontSize: 16
+                    },
+                    // layout:{
+                    //     padding:{
+                    //         left: 50,
+                    //         right: 0,
+                    //         bottom:0,
+                    //         top: 0
+                    //     }
+                    // }
+                },
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderWidth: 4,
+                borderColor: '#777',
+                hoverBorderWidth: 3,
+                hoverBorderColor: '#000'
+            });
+
+            let CS_Scatter = new Chart(CSScatter, {
+                type: 'scatter',
+                data: {
+                    labels: ['8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm'],
+                    datasets: [{
+                        label: 'Number of Customers',
+                        data:[
+                            10, 12, 32, 4, 5, 23, 13, 10
+                        ]
+                    }],
+                },
+                options: {
+                    title:{
+                        display: true,
+                        text: 'Customers Served',
+                        fontSize: 16
+                    },
+                    // layout:{
+                    //     padding:{
+                    //         left: 50,
+                    //         right: 0,
+                    //         bottom:0,
+                    //         top: 0
+                    //     }
+                    // }
+                },
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderWidth: 4,
+                borderColor: '#777',
+                hoverBorderWidth: 3,
+                hoverBorderColor: '#000'
+            });
+        </script>
+
+    
     </div>
     
 
