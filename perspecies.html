@@ -1,5 +1,6 @@
 <html lang="en"><head>
     <link rel="stylesheet" href="SD-perspec.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     <title>Krusty Krab</title>
 </head>
 <body>
@@ -23,9 +24,186 @@
             </ul>
             <a href="index.html"><button type="button" id="btn-logout"><img src="assets/logout.png" id="img-logout">&nbsp;Log Out</button></a>
         </nav>
-        <div id="content">
-            Content here
-        </div>
+                
+        <div id="container">
+                <div class="sortby">Search By Date: <input type="date" id="date"></div>
+                
+                <div class="chartcontainer">
+                    <canvas class="charts" id="bar">Customers Served</canvas>            
+                </div>
+    
+                <div class="chartcontainer">
+                    <canvas class="charts" id="line">Grub Popularity</canvas>            
+                </div>
+    
+                <div class="chartcontainer">
+                    <canvas class="charts" id="scatter">Grub Preference per Species</canvas>
+                </div>
+                
+            </div>
+    
+            <script>
+                // loads data
+                let data = localStorage.getItem("json")
+                let dataObject = JSON.parse(data)
+                let datetime = localStorage.getItem("datetime")
+                let datetimeObject = JSON.parse(datetime)
+
+                // fix data to charts according to date
+                function fix_data(chart, loaded, burger, date) {
+                    var i
+                    console.log("Date is: " + date)
+                    chart.species = []
+                    chart.number_of_orders = []
+                    for (i=0; i<loaded.customerSpecies.length; i++) {
+                        if (loaded.burgerBought[i] == burger) {
+                            console.log("same burger")
+                            console.log("timestamp: " + loaded.timestamp[i])
+                            if (loaded.timestamp[i].includes(date)) {
+                                console.log("same date?")
+                                if (chart.species.includes(loaded.customerSpecies[i]))
+                                    chart.number_of_orders[chart.species.indexOf(loaded.customerSpecies[i])]++;
+                                else {
+                                    console.log(loaded.burgerBought + " " + burger)
+                                    chart.species.push(loaded.customerSpecies[i])
+                                    chart.number_of_orders.push(1)
+                                    console.log("chart number of orders: " + chart.number_of_orders)
+                                }
+                            }                            
+                        }
+                    }
+                    show_data()
+                }
+
+                // fixing format to timestamp's date format
+                function fix_format(format) {
+                    if (format<10) {
+                        var string = format.toString()
+                        string = '0' + string
+                    }
+                        return string
+                }
+
+                // gets today's date and their proper format
+                var today = new Date()
+                var mm = today.getMonth()+1
+                var dd = today.getDate()
+                mm = fix_format(mm)
+                dd = fix_format(dd)                
+
+                // data variables
+                let krabbyData = {
+                    "species" : [],
+                    "number_of_orders" : []
+                }
+                let comboData = {
+                    "species" : [],
+                    "number_of_orders" : []
+                }
+                let deluxeData = {
+                    "species" : [],
+                    "number_of_orders" : []
+                }
+
+                
+
+                // console.log("species ", comboData.species)
+                // console.log("number " + comboData.number_of_orders)
+                // for (i=0; i<dataObject.customerSpecies.length; i++) {
+                //     if (dataObject.burgerBought[i] == 'Krabby Patty') {
+                //         if (krabbyData.species.includes(dataObject.customerSpecies[i]))
+                //             krabbyData.number_of_orders[krabbyData.species.indexOf(dataObject.customerSpecies[i])]++;
+                //     }
+                //     else {
+                //         krabbyData.species.push(dataObject.customerSpecies[i])
+                //         krabbyData.number_of_orders.push(1)
+                //     }
+                // }            
+
+                let CSBar = document.getElementById('bar').getContext('2d');
+                let CSLine = document.getElementById('line').getContext('2d');
+                let CSScatter = document.getElementById('scatter').getContext('2d');
+    
+                Chart.defaults.global.defaultFontSize = 12;
+                Chart.defaults.global.defaultFontColor = '#777';
+                
+                // initial data, current date
+                fix_data(krabbyData, dataObject, "Krabby Patty", today.getFullYear()+'-'+mm+'-'+dd)
+                fix_data(comboData, dataObject, "Krusty Combo", today.getFullYear()+'-'+mm+'-'+dd)
+                fix_data(deluxeData, dataObject, "Krusty Deluxe", today.getFullYear()+'-'+mm+'-'+dd)
+                
+                // shows data to charts
+                function show_data() {
+                    let CS_Bar = new Chart(CSBar, {
+                        type: 'bar',
+                        data: {
+                            labels: krabbyData.species,
+                            datasets: [{
+                                label: 'Species',
+                                data: krabbyData.number_of_orders
+                            }],
+                        },
+                        options: {
+                            title:{
+                                display: true,
+                                text: 'Krabby Patty',
+                                fontSize: 16
+                            }
+                        }
+                    });
+
+                    let CS_Line = new Chart(CSLine, {
+                        type: 'bar',
+                        data: {
+                            labels: comboData.species,
+                            datasets: [{
+                                label: 'Species',
+                                data: comboData.number_of_orders
+                            }],
+                        },
+                        options: {
+                            title:{
+                                display: true,
+                                text: 'Krusty Combo',
+                                fontSize: 16
+                            }
+                        }
+                    });
+        
+                    let CS_Scatter = new Chart(CSScatter, {
+                        type: 'bar',
+                        data: {
+                            labels: deluxeData.species,
+                            datasets: [{
+                                label: 'Species',
+                                data: deluxeData.number_of_orders
+                            }],
+                        },
+                        options: {
+                            title:{
+                                display: true,
+                                text: 'Krusty Deluxe',
+                                fontSize: 16
+                            }
+                        }
+                    });
+                }
+                                                
+                // search data by date
+                document.getElementById("date").onchange = function() {
+                    console.log("ginalaw mo ko!")
+                    var searchDate = document.getElementById("date").value
+                    var i
+                    for (i=0; i<datetimeObject.date.length; i++) {
+                        if (searchDate == datetimeObject.date[i]) {
+                            fix_data(krabbyData, dataObject, "Krabby Patty", searchDate)
+                            fix_data(comboData, dataObject, "Krusty Combo", searchDate)
+                            fix_data(deluxeData, dataObject, "Krusty Deluxe", searchDate)
+                        }                            
+                    }
+                }
+            </script>
+    
     </div>
     
 

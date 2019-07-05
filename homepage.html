@@ -28,21 +28,116 @@
     </nav>
     
     <div id="container">
+        <div id="today"><h2>DATA FOR TODAY</h2></div>
         <div class="chartcontainer">
-            <canvas class="charts" id="customersserved">Customers Served</canvas>            
+            <canvas class="charts" id="customersserved"></canvas>
+            <a href="customerserved.html">See more ></a>       
         </div>
 
         <div class="chartcontainer">
-            <canvas class="charts" id="grubpopularity">Grub Popularity</canvas>            
+            <canvas class="charts" id="grubpopularity"></canvas>            
+            <a href="grubpopularity.html">See more ></a>
         </div>
 
         <div class="chartcontainer">
-            <canvas class="charts" id="perspecies">Grub Preference per Species</canvas>
+            <canvas class="charts" id="perspecies"></canvas>
+            <a href="perspecies.html">See more ></a>
         </div>
         
     </div>
 
     <script>
+        // loads data
+        let data = localStorage.getItem("json")
+        let dataObject = JSON.parse(data)
+        let datetime = localStorage.getItem("datetime")
+        let datetimeObject = JSON.parse(datetime)
+
+        let customerservedData = {
+            "time" : [],
+            "number_of_customers" : []
+        }
+        let grubData = {
+            "number_krabbypatty": 0,
+            "number_krustycombo": 0,
+            "number_krustydeluxe": 0
+        }
+        let krabbyData = {
+            "species" : [],
+            "number_of_orders" : []
+        }
+        let comboData = {
+            "species" : [],
+            "number_of_orders" : []
+        }
+        let deluxeData = {
+            "species" : [],
+            "number_of_orders" : []
+        }
+
+        // fixing format to timestamp's date format
+        function fix_format(format) {
+            if (format<10) {
+                var string = format.toString()
+                string = '0' + string
+            }
+                return string
+        }
+
+        // gets today's date and their proper format
+        var today = new Date()
+        var mm = today.getMonth()+1
+        var dd = today.getDate()
+        mm = fix_format(mm)
+        dd = fix_format(dd)
+        var dateString = today.getFullYear() + '-' + mm + '-' + dd        
+        console.log(dateString)
+        // initialize data
+        var i
+        for (i=0; i<dataObject.burgerBought.length; i++) {
+            if (dataObject.timestamp[i].includes(dateString)) {
+                // for customer served
+                console.log(datetimeObject.time[i])
+                if (customerservedData.time.includes(datetimeObject.time[i]) )
+                    customerservedData.number_of_customers[customerservedData.time.indexOf(datetimeObject.time[i])]++;
+                else {                    
+                    customerservedData.time.push(datetimeObject.time[i])
+                    customerservedData.number_of_customers.push(1)
+                }
+
+                // for grub popularity
+                if (dataObject.burgerBought[i] == 'Krabby Patty') {
+                    grubData.number_krabbypatty++ 
+
+                    if (krabbyData.species.includes(dataObject.customerSpecies[i]))
+                        krabbyData.number_of_orders[krabbyData.species.indexOf(dataObject.customerSpecies[i])]++;
+                    else {                        
+                        krabbyData.species.push(dataObject.customerSpecies[i])
+                        krabbyData.number_of_orders.push(1)
+                    }
+                } else if (dataObject.burgerBought[i] == 'Krusty Combo') {
+                    grubData.number_krustycombo++
+
+                    if (comboData.species.includes(dataObject.customerSpecies[i]))
+                        comboData.number_of_orders[comboData.species.indexOf(dataObject.customerSpecies[i])]++;
+                    else {
+                        comboData.species.push(dataObject.customerSpecies[i])
+                        comboData.number_of_orders.push(1)
+                    }
+                } else if (dataObject.burgerBought[i] == 'Krusty Deluxe') {
+                    grubData.number_krustydeluxe++
+
+                    if (deluxeData.species.includes(dataObject.customerSpecies[i]))
+                        deluxeData.number_of_orders[deluxeData.species.indexOf(dataObject.customerSpecies[i])]++;
+                    else {
+                        deluxeData.species.push(dataObject.customerSpecies[i])
+                        deluxeData.number_of_orders.push(1)
+                    }
+                }                                
+            }
+        }
+
+
         let customersservedChart = document.getElementById('customersserved').getContext('2d');
         let grubpopularityChart = document.getElementById('grubpopularity').getContext('2d');
         let perspeciesChart = document.getElementById('perspecies').getContext('2d');
@@ -53,12 +148,10 @@
         let CS_Chart = new Chart(customersservedChart, {
             type: 'line',
             data: {
-                labels: ['8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm'],
+                labels: customerservedData.time,
                 datasets: [{
                     label: 'Number of Customers',
-                    data:[
-                        10, 12, 32, 4, 5, 23, 13, 10
-                    ]
+                    data: customerservedData.number_of_customers
                 }],
             },
             options: {
@@ -66,28 +159,8 @@
                     display: true,
                     text: 'Customers Served',
                     fontSize: 16
-                },
-                // layout:{
-                //     padding:{
-                //         left: 50,
-                //         right: 0,
-                //         bottom:0,
-                //         top: 0
-                //     }
-                // }
-            },
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderWidth: 4,
-            borderColor: '#777',
-            hoverBorderWidth: 3,
-            hoverBorderColor: '#000'
+                }
+            }
         });
 
         let GP_Chart = new Chart(grubpopularityChart, {
@@ -97,7 +170,7 @@
                 datasets: [{
                     label: 'Number of Grub Orders',
                     data:[
-                        250, 700, 412
+                        grubData.number_krabbypatty, grubData.number_krustycombo, grubData.number_krustydeluxe
                     ]
                 }],
             },
@@ -106,39 +179,17 @@
                     display: true,
                     text: 'Grub Popularity',
                     fontSize: 16
-                },
-                // layout:{
-                //     padding:{
-                //         left: 50,
-                //         right: 0,
-                //         bottom:0,
-                //         top: 0
-                //     }
-                // }
-            },
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderWidth: 4,
-            borderColor: '#777',
-            hoverBorderWidth: 3,
-            hoverBorderColor: '#000'
+                }
+            }
         });
 
         let PS_Chart = new Chart(perspeciesChart, {
             type: 'line',
             data: {
-                labels: ['Squid', 'Sponge', 'Starfish', 'Whale', 'Lobster', 'Milkfish'],
+                labels: krabbyData.species,
                 datasets: [{
                     label: 'Grub Preference per Species',
-                    data:[
-                        
-                    ]
+                    data: krabbyData.number_of_orders
                 }],
             },
             options: {
@@ -146,28 +197,8 @@
                     display: true,
                     text: 'Grub Popularity Per Species',
                     fontSize: 16
-                },
-                // layout:{
-                //     padding:{
-                //         left: 50,
-                //         right: 0,
-                //         bottom:0,
-                //         top: 0
-                //     }
-                // }
-            },
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderWidth: 4,
-            borderColor: '#777',
-            hoverBorderWidth: 3,
-            hoverBorderColor: '#000'
+                }
+            }
         });
     </script>
 

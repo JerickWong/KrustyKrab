@@ -2,7 +2,9 @@ html, body {
   width: 100%;
   height: 100%;
 }
-
+.h4, h4{
+    font-size: 2.5rem;
+}
 
 *{
     margin: 0;
@@ -153,4 +155,10 @@ nav ul li ul li a:hover{
     width: 500px;
     background-color: rgb(200, 235, 250);
     color: black;
+}
+
+#today{
+    position: absolute;
+    margin: 70px;
+    font-weight: 700px;
 }

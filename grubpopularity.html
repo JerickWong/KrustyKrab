@@ -26,7 +26,7 @@
         </nav>
                 
         <div id="container">
-                <div class="sortby">Sort By: <input type="date" id="date"></div>
+                <div class="sortby">Search by Date: <input type="date" id="date" onchange="here()"></div>
                 
                 <div class="chartcontainer">
                     <canvas class="charts" id="bar"></canvas>            
@@ -34,141 +34,120 @@
     
                 <div class="chartcontainer">
                     <canvas class="charts" id="line"></canvas>            
-                </div>
-    
-                <div class="chartcontainer">
-                    <canvas class="charts" id="scatter"></canvas>
-                </div>
+                </div>                
                 
             </div>
     
-            <script>
+            <script>                
+                // loads data
+                let data = localStorage.getItem("json")
+                let dataObject = JSON.parse(data)
+                let datetime = localStorage.getItem("datetime")
+                let datetimeObject = JSON.parse(datetime)
+
+                // fix data to charts according to date
+                function fix_data(chart, loaded, date) {
+                    var i
+                    console.log("Date is: " + date)
+                    chart.number_krabbypatty = []
+                    chart.number_krustycombo = []
+                    chart.number_krustydeluxe = []
+
+                    for (i=0; i<loaded.burgerBought.length; i++) {
+                        if (loaded.timestamp[i].includes(date)) {
+                            if (loaded.burgerBought[i] == 'Krabby Patty') {
+                                chart.number_krabbypatty++ 
+                            } else if (loaded.burgerBought[i] == 'Krusty Combo') {
+                                chart.number_krustycombo++
+                            } else if (loaded.burgerBought[i] == 'Krusty Deluxe') {
+                                chart.number_krustydeluxe++
+                            }                        
+                        }
+                    }
+                    show_data()
+                }
+                
+                // fixing format to timestamp's date format
+                function fix_format(format) {
+                    if (format<10) {
+                        var string = format.toString()
+                        string = '0' + string
+                    }
+                        return string
+                }
+
+                // gets today's date and their proper format
+                var today = new Date()
+                var mm = today.getMonth()+1
+                var dd = today.getDate()
+                mm = fix_format(mm)
+                dd = fix_format(dd)           
+
+                // data variable
+                var grubData = {
+                    "number_krabbypatty": 0,
+                    "number_krustycombo": 0,
+                    "number_krustydeluxe": 0
+                }
+
                 let CSBar = document.getElementById('bar').getContext('2d');
-                let CSLine = document.getElementById('line').getContext('2d');
-                let CSScatter = document.getElementById('scatter').getContext('2d');
+                let CSLine = document.getElementById('line').getContext('2d');                
     
                 Chart.defaults.global.defaultFontSize = 12;
                 Chart.defaults.global.defaultFontColor = '#777';
-    
-                let CS_Bar = new Chart(CSBar, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Krabby Patty', 'Krusty Combo', 'Krusty Deluxe', ],
-                        datasets: [{
-                            label: 'Number of Grub Orders',
-                            data:[
-                                250, 700, 412
-                            ]
-                        }],
-                    },
-                    options: {
-                        title:{
-                            display: true,
-                            text: 'Grub Popularity',
-                            fontSize: 16
+                
+                // initial data, current date
+                fix_data(grubData, dataObject, today.getFullYear()+'-'+mm+'-'+dd)
+
+                function show_data(){
+                    let CS_Bar = new Chart(CSBar, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Krabby Patty', 'Krusty Combo', 'Krusty Deluxe'],
+                            datasets: [{
+                                label: 'Number of Grub Orders',
+                                data:[grubData.number_krabbypatty, grubData.number_krustycombo, grubData.number_krustydeluxe]
+                            }],
                         },
-                        // layout:{
-                        //     padding:{
-                        //         left: 50,
-                        //         right: 0,
-                        //         bottom:0,
-                        //         top: 0
-                        //     }
-                        // }
-                    },
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderWidth: 4,
-                    borderColor: '#777',
-                    hoverBorderWidth: 3,
-                    hoverBorderColor: '#000'
-                });
-    
-                let CS_Line = new Chart(CSLine, {
-                    type: 'line',
-                    data: {
-                        labels: ['Krabby Patty', 'Krusty Combo', 'Krusty Deluxe', ],
-                        datasets: [{
-                            label: 'Number of Grub Orders',
-                            data:[
-                                250, 700, 412
-                            ]
-                        }],
-                    },
-                    options: {
-                        title:{
-                            display: true,
-                            text: 'Grub Popularity',
-                            fontSize: 16
+                        options: {
+                            title:{
+                                display: true,
+                                text: 'Grub Popularity',
+                                fontSize: 16
+                            },                            
+                        }
+                    });
+        
+                    let CS_Line = new Chart(CSLine, {
+                        type: 'line',
+                        data: {
+                            labels: ['Krabby Patty', 'Krusty Combo', 'Krusty Deluxe'],
+                            datasets: [{
+                                label: 'Number of Grub Orders',
+                                data:[grubData.number_krabbypatty, grubData.number_krustycombo, grubData.number_krustydeluxe]
+                            }],
                         },
-                        // layout:{
-                        //     padding:{
-                        //         left: 50,
-                        //         right: 0,
-                        //         bottom:0,
-                        //         top: 0
-                        //     }
-                        // }
-                    },
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderWidth: 4,
-                    borderColor: '#777',
-                    hoverBorderWidth: 3,
-                    hoverBorderColor: '#000'
-                });
-    
-                let CS_Scatter = new Chart(CSScatter, {
-                    type: 'bubble',
-                    data: {
-                        labels: ['Krabby Patty', 'Krusty Combo', 'Krusty Deluxe', ],
-                        datasets: [{
-                            label: 'Number of Grub Orders',
-                            data:[
-                                250, 700, 412
-                            ]
-                        }],
-                    },
-                    options: {
-                        title:{
-                            display: true,
-                            text: 'Grub Popularity',
-                            fontSize: 16
-                        },
-                        // layout:{
-                        //     padding:{
-                        //         left: 50,
-                        //         right: 0,
-                        //         bottom:0,
-                        //         top: 0
-                        //     }
-                        // }
-                    },
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderWidth: 4,
-                    borderColor: '#777',
-                    hoverBorderWidth: 3,
-                    hoverBorderColor: '#000'
-                });
+                        options: {
+                            title:{
+                                display: true,
+                                text: 'Grub Popularity',
+                                fontSize: 16
+                            }
+                        }
+                    });
+                }
+                
+                // search data by date
+                document.getElementById("date").onchange = function() {
+                    console.log("ginalaw mo ko!")
+                    var searchDate = document.getElementById("date").value
+                    var i
+                    for (i=0; i<datetimeObject.date.length; i++) {
+                        if (searchDate == datetimeObject.date[i]) {
+                            fix_data(grubData, dataObject, searchDate)
+                        }                            
+                    }
+                }
             </script>
     
     </div>

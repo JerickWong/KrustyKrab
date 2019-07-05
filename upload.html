@@ -1,5 +1,7 @@
 <html lang="en"><head>
     <link rel="stylesheet" href="upload.css">
+    <script src="jquery.js"></script>
+    <!-- <script src="Node.js"></script> -->
     <title>Krusty Krab</title>
 </head>
 <body>
@@ -28,13 +30,25 @@
             <p><img id='bodyimg' src="view/krustykrab.jpg" alt="krustykrab"></p>
             <p id="msg">Help us improve Krusty Krab</p>
             <div class="upload">
-                <input id="contentFile" type="file" accept="application/json" />
+                <form id="form">
+                    <input id="contentFile" type="file" accept="application/json" />
+                </form>                
             </div>
-            <div>
-                <button>Submit File</button>
+            <div id='confirmation'>
+                
             </div>
             
             <script>
+                //getting date from timestamp
+                function getDate(timestamp){                    
+                    return timestamp.substring(0,10)
+                }
+                function getTime(timestamp){
+                    return timestamp.substring(11,20)
+                }
+
+                // window.localStorage.removeItem("json");
+                // window.localStorage.removeItem("datetime")
                 document.getElementById('contentFile').onchange = function(e) {
                 try {
                     let files = e.target.files;
@@ -42,28 +56,157 @@
                         alert('No file selected!');
                         return;
                     }
-                    if (!files.JSON){
-                        alert('Upload .json files only')
-                        return;
-                    }
+                    // else if (!files/JSON){
+                    //     alert('Upload .json files only')
+                    //     return;
+                    // }
                     else {
                         let file = files[0];
                         let reader = new FileReader();
                         const self = this;
                         reader.onload = (event) => {
-                            console.log('FILE CONTENT', event.target.result);
+                            console.log('FILE CONTENT', event.target.result);    
+                            var object = JSON.parse(event.target.result)
+
+                            // if first time uploading a json file, create a new json file
+                            if (localStorage.getItem("json") == null) {
+                                let json = {
+                                    "timestamp": [object.timestamp],
+                                    "burgerBought": [object.burgerBought],
+                                    "customerSpecies": [object.customerSpecies]
+                                }
+                                let datetime = {
+                                    "date": [getDate(object.timestamp)],
+                                    "time": [getTime(object.timestamp)]
+                                }
+                                localStorage.setItem("json", JSON.stringify(json))
+                                localStorage.setItem("datetime", JSON.stringify(datetime))
+                                console.log("object: "+ object.timestamp)
+                                console.log("submitted")
+
+                                document.getElementById("confirmation").innerHTML = "Upload successful"
+                            }
+                            // else concatinate with the old json file
+                            else {
+                                var oldJSON = localStorage.getItem("json")
+                                var datetime = localStorage.getItem("datetime")
+                                var obj = JSON.parse(oldJSON)
+                                var datetimeobj = JSON.parse(datetime)
+
+                                obj.timestamp.push(object.timestamp)
+                                obj.burgerBought.push(object.burgerBought)
+                                obj.customerSpecies.push(object.customerSpecies)
+                                datetimeobj.date.push(getDate(object.timestamp))
+                                datetimeobj.time.push(getTime(object.timestamp))
+
+                                localStorage.setItem("json", JSON.stringify(obj))
+                                localStorage.setItem("datetime", JSON.stringify(datetimeobj))
+
+                                console.log("may laman local storage")
+
+                                document.getElementById("confirmation").innerHTML = "Upload successful"
+                            }
                         };
                         reader.readAsText(file);
                     }
                     
-                } catch (err) {
-                    console.error(err);
+                    } catch (err) {
+                        console.error(err);
+                    }
                 }
-            }
+
+                // // for proper formatting
+                // function addZero(date){
+                //     date = parseInt(date, 10);
+                //     if (date < 10)
+                //         return '0' + date.toString()
+                //     return
+                // }
+
+                // in submitting
+                // document.getElementById("submitButton").onclick = function(){
+                //     // let files = e.target.files;
+                //     // let file = files[0]
+                //     // let reader = new FileReader()
+                //     // const self = this
+                //     // reader.onload = (event) => {
+
+                //     // }
+                //     // console.log(document.getElementById('contentFile').value)
+                //     let file = document.getElementById('contentFile').value
+
+                //     var object = JSON.parse(file)
+                //     let newJSON = {
+                //         "timestamp": object.timestamp,
+                //         "burgerBought": object.burgerBought,
+                //         "customerSpecies": object.customerSpecies
+                //     }
+
+                //     if (localStorage.getItem("json") == null) {
+                //         let json = {
+                //             "timestamp": [newJSON.timestamp],
+                //             "burgerBought": [newJSON.burgerBought],
+                //             "customerSpecies": [newJSON.customerSpecies]
+                //         }
+                //         localStorage.setItem("json", JSON.stringify(json))
+                //         console.log("object: "+ object.timestamp)
+                //         console.log("submitted")
+                //     }
+                //     else {
+                //         var oldJSON = localStorage.getItem("json")
+                //         var obj = JSON.parse(oldJSON)
+
+                //         obj.timestamp.push(newJSON.timestamp)
+                //         obj.burgerBought.push(newJSON.burgerBought)
+                //         obj.customerSpecies.push(newJSON.customerSpecies)
+
+                //         localStorage.setItem("json", JSON.stringify(obj))
+                //         console.log("may laman local storage")
+                //     }
+
+                    // var today = new Date()
+                    // var date = new File([""], "./"+ today.getFullYear + "-" + addZero(today.getMonth()+1) + '-' + addZero(today.getDate()) + ".json")
+                    // const fs = require('fs')
+
+                    // if (fs.existsSync(date)) {
+                        
+                    //     let newFile = { "timestamp" : [file.timestamp],
+                    //                 "burgerBought" : [file.burgerbought],
+                    //                 "customerSpecies" : [file.customerSpecies]
+                    //     }
+                        
+                    //     fs.writeFile(date, newFile, function(err){
+                    //                 if (err)
+                    //                     console.log(err)
+                    //             })
+                    // }
+                    // // if for today's file already exist, append
+                    // else {
+                    //     let myRequest = new Request(date)
+
+                    //     fetch(myRequest)                                
+                    //         .then(function(data){
+                    //             console.log(data.burgerBought);
+                    //             var obj = JSON.parse(data)
+                    //             obj.timestamp.push(file.timestamp)
+                    //             obj.burgerBought.push(file.burgerBought)
+                    //             obj.customerSpecies.push(file.customerSpecies)
+                    //             jsonString = JSON.stringify(obj)
+
+                                
+                    //             fs.writeFile(date, jsonString, function(err){
+                    //                 if (err)
+                    //                     console.log(err)
+                    //             })
+                    // }
+                    
+                    
+            
             </script>
             
         </article>
     </div>
     
 
-</body></html>
+</body>
+</html>

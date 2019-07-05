@@ -26,7 +26,7 @@
         </nav>
         
         <div id="container">
-            <div class="sortby">Sort By: <input type="date" id="date"></div>
+            <div class="sortby">Search by Date: <input type="date" id="date"></div>
             
             <div class="chartcontainer">
                 <canvas class="charts" id="bar"></canvas>            
@@ -35,140 +35,118 @@
             <div class="chartcontainer">
                 <canvas class="charts" id="line"></canvas>            
             </div>
-
-            <div class="chartcontainer">
-                <canvas class="charts" id="scatter"></canvas>
-            </div>
             
         </div>
 
         <script>
+
+            let data = localStorage.getItem("json")
+            let datetime = localStorage.getItem("datetime")
+            let dataObject = JSON.parse(data)
+            let datetimeObject = JSON.parse(datetime)
+
+            // fix data to charts according to date
+            function fix_data(chart, loaded, datetime, date) {
+                var i
+                console.log(date)
+                console.log(loaded.customerSpecies)
+                chart.time = []
+                chart.number_of_customers = []
+                for (i=0; i<loaded.customerSpecies.length; i++) {                    
+                    if (loaded.timestamp[i].includes(date)) {
+                        console.log("same date?")
+                        if (chart.time.includes(datetime.time[i]))
+                            chart.number_of_customers[chart.time.indexOf(datetime.time[i])]++;
+                        else {
+                            
+                            chart.time.push(datetime.time[i])
+                            chart.number_of_customers.push(1)
+                            console.log("chart number of orders: " + chart.number_of_customers)
+                        }                                            
+                    }
+                }
+                show_data()
+            }            
+
+            // fixing format to timestamp's date format
+            function fix_format(format) {
+                    if (format<10) {
+                        var string = format.toString()
+                        string = '0' + string
+                    }
+                        return string
+                }
+
+            // gets today's date and their proper format
+            var today = new Date()
+            var mm = today.getMonth()+1
+            var dd = today.getDate()
+            mm = fix_format(mm)
+            dd = fix_format(dd) 
+
+            let customerservedData = {
+                "time" : [],
+                "number_of_customers" : []
+            }
+
             let CSBar = document.getElementById('bar').getContext('2d');
-            let CSLine = document.getElementById('line').getContext('2d');
-            let CSScatter = document.getElementById('scatter').getContext('2d');
+            let CSLine = document.getElementById('line').getContext('2d');            
 
             Chart.defaults.global.defaultFontSize = 12;
             Chart.defaults.global.defaultFontColor = '#777';
+            
+            // initial data, current date
+            fix_data(customerservedData, dataObject, datetimeObject, today.getFullYear()+'-'+mm+'-'+dd)
 
-            let CS_Bar = new Chart(CSBar, {
-                type: 'line',
-                data: {
-                    labels: ['8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm'],
-                    datasets: [{
-                        label: 'Number of Customers',
-                        data:[
-                            10, 12, 32, 4, 5, 23, 13, 10
-                        ]
-                    }],
-                },
-                options: {
-                    title:{
-                        display: true,
-                        text: 'Customers Served',
-                        fontSize: 16
+            function show_data() {
+                let CS_Bar = new Chart(CSBar, {
+                    type: 'bar',
+                    data: {
+                        labels: customerservedData.time,
+                        datasets: [{
+                            label: 'Number of Customers',
+                            data: customerservedData.number_of_customers
+                        }],
                     },
-                    // layout:{
-                    //     padding:{
-                    //         left: 50,
-                    //         right: 0,
-                    //         bottom:0,
-                    //         top: 0
-                    //     }
-                    // }
-                },
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderWidth: 4,
-                borderColor: '#777',
-                hoverBorderWidth: 3,
-                hoverBorderColor: '#000'
-            });
+                    options: {
+                        title:{
+                            display: true,
+                            text: 'Customers Served',
+                            fontSize: 16
+                        }
+                    }
+                });
 
-            let CS_Line = new Chart(CSLine, {
-                type: 'line',
-                data: {
-                    labels: ['8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm'],
-                    datasets: [{
-                        label: 'Number of Customers',
-                        data:[
-                            10, 12, 32, 4, 5, 23, 13, 10
-                        ]
-                    }],
-                },
-                options: {
-                    title:{
-                        display: true,
-                        text: 'Customers Served',
-                        fontSize: 16
+                let CS_Line = new Chart(CSLine, {
+                    type: 'line',
+                    data: {
+                        labels: customerservedData.time,
+                        datasets: [{
+                            label: 'Number of Customers',
+                            data:customerservedData.number_of_customers
+                        }],
                     },
-                    // layout:{
-                    //     padding:{
-                    //         left: 50,
-                    //         right: 0,
-                    //         bottom:0,
-                    //         top: 0
-                    //     }
-                    // }
-                },
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderWidth: 4,
-                borderColor: '#777',
-                hoverBorderWidth: 3,
-                hoverBorderColor: '#000'
-            });
-
-            let CS_Scatter = new Chart(CSScatter, {
-                type: 'scatter',
-                data: {
-                    labels: ['8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm'],
-                    datasets: [{
-                        label: 'Number of Customers',
-                        data:[
-                            10, 12, 32, 4, 5, 23, 13, 10
-                        ]
-                    }],
-                },
-                options: {
-                    title:{
-                        display: true,
-                        text: 'Customers Served',
-                        fontSize: 16
-                    },
-                    // layout:{
-                    //     padding:{
-                    //         left: 50,
-                    //         right: 0,
-                    //         bottom:0,
-                    //         top: 0
-                    //     }
-                    // }
-                },
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderWidth: 4,
-                borderColor: '#777',
-                hoverBorderWidth: 3,
-                hoverBorderColor: '#000'
-            });
+                    options: {
+                        title:{
+                            display: true,
+                            text: 'Customers Served',
+                            fontSize: 16
+                        }
+                    }
+                });
+            }
+            
+            // search data by date
+            document.getElementById("date").onchange = function() {
+                console.log("ginalaw mo ko!")
+                var searchDate = document.getElementById("date").value
+                var i
+                for (i=0; i<datetimeObject.date.length; i++) {
+                    if (searchDate == datetimeObject.date[i]) {
+                        fix_data(customerservedData, dataObject, datetimeObject, searchDate)
+                    }                            
+                }
+            }
         </script>
 
     
