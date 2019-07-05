@@ -5,7 +5,28 @@
         <link href="index-style.css" type="text/css" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
-    
+<!--    New-->
+    <script>
+        function Login(form) { 
+            username = new Array(); 
+            username = ["Thea", "Dale", "Jerick"];
+            password = new Array();
+            password = ["hi", "hello", "yo"];
+            page = "homepage" + ".html";
+            none = true
+        for(var i = 0; i <= username.length; i++){
+            if (form.username.value == username[i] &&               form.password.value == password[i]){ 
+                self.location.href = page;
+                none = false
+            }
+            else if(i == username.length && none != false){
+                alert("Either the username or password you entered is incorrect.\nPlease try again."); 
+                form.username.focus();
+            }
+        }
+        return true;
+        }
+    </script>
     
     <body>
         <div class="header">
@@ -19,20 +40,20 @@
         
         <div class="login-cred">
             <img src="assets/profile.png" alt="avatar" class="log-avatar"><br>
-            
-            <div id="username">
-                <img src="assets/user.png" alt="avatar-username" class="log-avun"> 
-                <input type="text" id="log-username" placeholder="Your username">
-                <br>
-            </div>
-            
-            <div id="password">
-                <img src="assets/lock.png" alt="avatar-password" class="log-avun">
-                <input type="password" id="log-password" placeholder="Your password">
-            <br>      
-            </div>
-            <form action="homepage.html">
-                <input type="submit" value="Login" id="log-submit"><br>
+            <form>
+                <div id="username">
+                    <img src="assets/user.png" alt="avatar-username" class="log-avun"> 
+                    <input type="text" id="log-username" placeholder="Your username" name="username">
+                    <br>
+                </div>
+
+                <div id="password">
+                    <img src="assets/lock.png" alt="avatar-password" class="log-avun">
+                    <input type="password" id="log-password" placeholder="Your password" name="password">
+                <br>      
+                </div>
+<!--            New-->
+                <input type="button" value="Login" id="log-submit" onClick="Login(this.form)"><br>
             </form> 
             
 <!--             to open to a new tab: target="_blank"-->
