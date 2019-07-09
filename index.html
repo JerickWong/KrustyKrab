@@ -8,24 +8,25 @@
 <!--    New-->
     <script>
         function Login(form) { 
-            username = new Array(); 
-            username = ["Thea", "Dale", "Jerick"];
-            password = new Array();
-            password = ["hi", "hello", "yo"];
+            username = "admin"
+            password = "p@ssword"
+//            username = new Array(); 
+//            username = ["Thea", "Dale", "Jerick"];
+//            password = new Array();
+//            password = ["hi", "hello", "yo"];
             page = "homepage" + ".html";
             none = true
-        for(var i = 0; i <= username.length; i++){
-            if (form.username.value == username[i] &&               form.password.value == password[i]){ 
+            
+            if (form.username.value == username && form.password.value == "p@ssword"){
                 self.location.href = page;
                 none = false
-            }
-            else if(i == username.length && none != false){
+            } else {
                 alert("Either the username or password you entered is incorrect.\nPlease try again."); 
                 form.username.focus();
             }
-        }
         return true;
         }
+        
     </script>
     
     <body>
@@ -39,16 +40,14 @@
         </div>
         
         <div class="login-cred">
-            <img src="assets/profile.png" alt="avatar" class="log-avatar"><br>
+            <img src="assets/login-kk-alt-profile.jpg" alt="avatar" class="log-avatar"><br>
             <form>
                 <div id="username">
-                    <img src="assets/user.png" alt="avatar-username" class="log-avun"> 
                     <input type="text" id="log-username" placeholder="Your username" name="username">
                     <br>
                 </div>
 
                 <div id="password">
-                    <img src="assets/lock.png" alt="avatar-password" class="log-avun">
                     <input type="password" id="log-password" placeholder="Your password" name="password">
                 <br>      
                 </div>

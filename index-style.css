@@ -11,6 +11,11 @@ html {
 
 body{
     background-color: #add8e6;
+    background-image: url(assets/login-kk-alt-background.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
 }
 
 @font-face{
@@ -31,8 +36,9 @@ body{
     font-family: Krabby Patty;
     color: #e50000;
     letter-spacing: 2px;
-    font-size: 60px;
+    font-size: 40px;
     margin-bottom: 20px;
+    
 }
 
 #log-username{
@@ -70,19 +76,20 @@ body{
 #log-submit{
     margin:10px;
     width: 300px;
-    margin-left: 34px;
+/*    margin-left: 30px;*/
     font-size: 20px;
     border: 1px solid #000000;
     background: rgba(233,150,122, 0.8);
 }
 
 #log-submit:hover{
-    background: rgba(68, 85, 90, 0.5);
+    background:rgba(197, 239, 247, 1);
+    
 }
 
 .log-head-krabs{
-    width: 120px;
-    height: 120px;   
+    width: 100px;
+    height: 100px;   
     position: relative;
     vertical-align: middle;
 }
@@ -98,6 +105,7 @@ body{
     padding: 10px;
     height: 300px;
     text-align: center;
+    border-radius: 75%;
 }
 
 /*
