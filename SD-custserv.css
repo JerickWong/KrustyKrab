@@ -16,9 +16,9 @@ html, body {
   
   body{
       /* background-color: rgb(185, 185, 185); */
-      background-image: url("view/background-1.jpg");
+      background-image: url("assets/background-alt.png");
       background-repeat: no-repeat;
-      background-size: 1561px 1291px;
+      background-size:100%;
       background-position: center;
   }
   
@@ -139,7 +139,7 @@ html, body {
 }
 
 #container{
-    background: rgba(255,255,255,0.5); 
+    background: rgba(82, 179, 217, 0.5); 
     margin: 20px;
     height: 83%;
     /* width: 97%; */
@@ -161,4 +161,5 @@ html, body {
     float: left;
     position: absolute;
     margin: 40px;
+    color: white;
 }

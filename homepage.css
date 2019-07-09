@@ -19,9 +19,9 @@ html, body {
 
 body{
     /* background-color: rgb(185, 185, 185); */
-    background-image: url("view/background-1.jpg");
+    background-image: url("assets/home-kk-alt-bg.jpg");
     background-repeat: no-repeat;
-    background-size: 1800px 1500px;
+    background-size:100%;
     background-position: center;
 }
 
@@ -40,6 +40,7 @@ nav{
     margin-left: 1.5px;
     position: absolute;
 }
+
 #name{
     /* padding: 12px 0px 20px 55px; */
     margin: 22px;
@@ -50,6 +51,7 @@ nav{
     float: left;
     font-family: Krabby Patty;
 }
+
 nav ul{
     padding-top: 20px;
     padding-left: 230px;
@@ -139,21 +141,21 @@ nav ul li ul li a:hover{
 }
 
 #container{
-    background: rgba(255,255,255,0.5); 
-    margin: 20px;
-    height: 83%;
+    background: rgba(82, 179, 217, 0.5); 
+    margin: 10px;
+    height: 60%;
     /* width: 97%; */
-    
+    text-align: center;
     position: relative;
 }
 
 .chartcontainer{
     display: inline-block;
-    padding: 30px;
+    padding: 10px;
     margin-top: 200px;
-    margin-left: 43px;
-    width: 500px;
-    background-color: rgb(200, 235, 250);
+    margin-left: 10px;
+    width: 450px;
+    background-color: rgba(34, 49, 63, 1);
     color: black;
 }
 

@@ -16,10 +16,16 @@ html, body {
 
 body{
     /* background-color: rgb(185, 185, 185); */
-    background-image: url("view/background-1.jpg");
+    background-image: url("assets/login-kk-alt-background.png");
     background-repeat: no-repeat;
-    background-size: 1561px 1291px;
+    background-size:100%;
     background-position: center;
+}
+
+header{
+    font-family: sans-serif;
+    width: 900px;
+    background: rgba(1, 50, 67, 1); 
 }
 
 nav{
@@ -133,11 +139,6 @@ nav ul li ul li a:hover{
     position: relative;
 }
 
-header{
-    font-family: sans-serif;
-    width: 900px;
-}
-
 #DP-name{
     font-size: 30px;
     background: rgba(255, 255, 255, 0.6);
@@ -194,49 +195,4 @@ header{
 
 #img-logout{
     width:19px;
-}
-
-
-
-#DP-edit-btn{
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
-	background:-moz-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
-	background:-webkit-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
-	background:-o-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
-	background:-ms-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
-	background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
-/*	background-color:#ededed;*/
-	-moz-border-radius:10px;
-	-webkit-border-radius:10px;
-	border-radius:10px;
-	border:1px solid #000000;
-	display:inline-block;
-	cursor:pointer;
-	color:#1f061f;
-	font-family:Verdana;
-	font-size:16px;
-	font-weight:bold;
-	padding:6px 23px;
-	text-decoration:none;
-    
-    float: right;
-    margin: 20px;
-    margin-right: 30px;
-    background: rgba(237, 237, 237, 0.8)
-}
-
-#DP-edit-btn:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
-	background:-moz-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
-	background:-webkit-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
-	background:-o-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
-	background:-ms-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
-	background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed',GradientType=0);
-	background-color:#dfdfdf;
-}
-
-#DP-edit-btn:active {
-	position:relative;
-	top:1px;
 }
