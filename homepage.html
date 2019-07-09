@@ -1,6 +1,7 @@
 <html lang="en"><head>
     <link rel="stylesheet" href="homepage.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <script src="jquery-3.4.1.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     
     <title>Krusty Krab</title>
@@ -29,25 +30,84 @@
     
     <div id="container">
         <div id="today"><h2>DATA FOR TODAY</h2></div>
-        
         <div class="chartcontainer">
             <canvas class="charts" id="customersserved"></canvas>
-            <a href="customerserved.html" class="see-more">See more ></a>       
+            <a href="customerserved.html">See more ></a>       
         </div>
 
         <div class="chartcontainer">
             <canvas class="charts" id="grubpopularity"></canvas>            
-            <a href="grubpopularity.html" class="see-more">See more ></a>
+            <a href="grubpopularity.html">See more ></a>
         </div>
 
         <div class="chartcontainer">
             <canvas class="charts" id="perspecies"></canvas>
-            <a href="perspecies.html" class="see-more">See more ></a>
+            <a href="perspecies.html">See more ></a>
         </div>
+        
     </div>
 
     <script>
         // loads data
+        // var request = new XMLHttpRequest();
+        // request.open("GET", "file:krustykrab_array.json", false);
+        // request.send(null)
+        // var data = JSON.parse(request.responseText);
+
+        // getting date from timestamp
+        function getDate(timestamp){
+                    let dateArray = [];
+                    for(let i =0; i<timestamp.length; i++)
+                        dateArray[i] = timestamp[i].substring(0,10)
+                    return dateArray
+                }
+
+                // getting time from timestamp
+                function getTime(timestamp){
+                    let timeArray = [];
+                    for(let i =0; i<timestamp.length; i++)
+                        timeArray[i] = timestamp[i].substring(11,20)
+                    return timeArray
+                }
+
+        $.getJSON("krustykrab_array.json", function(data){
+            let tempSales = data.sales
+            console.log("tempSales: " + tempSales)
+            let tempTimestamp = tempSales.map(a => a.datetime)
+            let tempBurger = tempSales.map(a => a.burger)
+            let tempSpecies = tempSales.map(a => a.species)
+
+            let tempDate = getDate(tempTimestamp)
+            let tempTime = getTime(tempTimestamp)
+
+            
+            let json = {
+                "timestamp": "",
+                "burgerBought": "",
+                "customerSpecies": ""
+            }
+            let datetime = {
+                "date": "",
+                "time": ""
+            }
+            
+            json.timestamp = tempTimestamp
+            json.burgerBought = tempBurger
+            json.customerSpecies = tempSpecies
+            
+            
+            console.log("tempDate: "+ tempDate)
+            console.log("tempTime: " + tempTime)                                
+            datetime.date = tempDate
+            datetime.time = tempTime
+            
+            localStorage.setItem("json", JSON.stringify(json))
+            localStorage.setItem("datetime", JSON.stringify(datetime))
+            console.log("submitted")
+            
+        })
+
+
         let data = localStorage.getItem("json")
         let dataObject = JSON.parse(data)
         let datetime = localStorage.getItem("datetime")
@@ -94,7 +154,7 @@
         console.log(dateString)
         // initialize data
         var i
-        for (i=0; i<dataObject.burgerBought.length; i++) {
+        for (i=0; i<dataObject.customerSpecies.length; i++) {
             if (dataObject.timestamp[i].includes(dateString)) {
                 // for customer served
                 console.log(datetimeObject.time[i])
@@ -106,7 +166,7 @@
                 }
 
                 // for grub popularity
-                if (dataObject.burgerBought[i] == 'Krabby Patty') {
+                if (dataObject.burgerBought[i] == 'Krabby Pattie') {
                     grubData.number_krabbypatty++ 
 
                     if (krabbyData.species.includes(dataObject.customerSpecies[i]))
@@ -166,7 +226,7 @@
         let GP_Chart = new Chart(grubpopularityChart, {
             type: 'line',
             data: {
-                labels: ['Krabby Patty', 'Krusty Combo', 'Krusty Deluxe', ],
+                labels: ['Krabby Pattie', 'Krusty Combo', 'Krusty Deluxe', ],
                 datasets: [{
                     label: 'Number of Grub Orders',
                     data:[

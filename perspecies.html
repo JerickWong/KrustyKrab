@@ -52,19 +52,18 @@
                 // fix data to charts according to date
                 function fix_data(chart, loaded, burger, date) {
                     var i
-                    console.log("Date is: " + date)
+
                     chart.species = []
                     chart.number_of_orders = []
+                    
                     for (i=0; i<loaded.customerSpecies.length; i++) {
-                        if (loaded.burgerBought[i] == burger) {
-                            console.log("same burger")
-                            console.log("timestamp: " + loaded.timestamp[i])
-                            if (loaded.timestamp[i].includes(date)) {
-                                console.log("same date?")
+                        if (loaded.timestamp[i].includes(date)) {
+                            console.log("same date?")                            
+                            if (loaded.burgerBought[i] == burger) {
+                                console.log("loaded burger: " + loaded.burgerBought[i] + " burger: " + burger)
                                 if (chart.species.includes(loaded.customerSpecies[i]))
                                     chart.number_of_orders[chart.species.indexOf(loaded.customerSpecies[i])]++;
                                 else {
-                                    console.log(loaded.burgerBought + " " + burger)
                                     chart.species.push(loaded.customerSpecies[i])
                                     chart.number_of_orders.push(1)
                                     console.log("chart number of orders: " + chart.number_of_orders)
@@ -128,12 +127,14 @@
                 Chart.defaults.global.defaultFontColor = '#777';
                 
                 // initial data, current date
-                fix_data(krabbyData, dataObject, "Krabby Patty", today.getFullYear()+'-'+mm+'-'+dd)
+                fix_data(krabbyData, dataObject, "Krabby Pattie", today.getFullYear()+'-'+mm+'-'+dd)
                 fix_data(comboData, dataObject, "Krusty Combo", today.getFullYear()+'-'+mm+'-'+dd)
                 fix_data(deluxeData, dataObject, "Krusty Deluxe", today.getFullYear()+'-'+mm+'-'+dd)
                 
                 // shows data to charts
                 function show_data() {
+                    console.log("showdata?")
+                    console.log(krabbyData.species)
                     let CS_Bar = new Chart(CSBar, {
                         type: 'bar',
                         data: {
@@ -146,7 +147,7 @@
                         options: {
                             title:{
                                 display: true,
-                                text: 'Krabby Patty',
+                                text: 'Krabby Pattie',
                                 fontSize: 16
                             }
                         }
@@ -194,9 +195,14 @@
                     console.log("ginalaw mo ko!")
                     var searchDate = document.getElementById("date").value
                     var i
+                    console.log("searchDate: "+searchDate)
+
                     for (i=0; i<datetimeObject.date.length; i++) {
+                        
+                        // console.log("datetimeObj.date: " + datetimeObject.date[i] )
+                        
                         if (searchDate == datetimeObject.date[i]) {
-                            fix_data(krabbyData, dataObject, "Krabby Patty", searchDate)
+                            fix_data(krabbyData, dataObject, "Krabby Pattie", searchDate)
                             fix_data(comboData, dataObject, "Krusty Combo", searchDate)
                             fix_data(deluxeData, dataObject, "Krusty Deluxe", searchDate)
                         }                            

@@ -51,11 +51,11 @@
                     console.log("Date is: " + date)
                     chart.number_krabbypatty = []
                     chart.number_krustycombo = []
-                    chart.number_krustydeluxe = []
+                    chart.number_krustydeluxe = []                    
 
                     for (i=0; i<loaded.burgerBought.length; i++) {
                         if (loaded.timestamp[i].includes(date)) {
-                            if (loaded.burgerBought[i] == 'Krabby Patty') {
+                            if (loaded.burgerBought[i] == 'Krabby Pattie') {
                                 chart.number_krabbypatty++ 
                             } else if (loaded.burgerBought[i] == 'Krusty Combo') {
                                 chart.number_krustycombo++
@@ -103,7 +103,7 @@
                     let CS_Bar = new Chart(CSBar, {
                         type: 'bar',
                         data: {
-                            labels: ['Krabby Patty', 'Krusty Combo', 'Krusty Deluxe'],
+                            labels: ['Krabby Pattie', 'Krusty Combo', 'Krusty Deluxe'],
                             datasets: [{
                                 label: 'Number of Grub Orders',
                                 data:[grubData.number_krabbypatty, grubData.number_krustycombo, grubData.number_krustydeluxe]
@@ -121,7 +121,7 @@
                     let CS_Line = new Chart(CSLine, {
                         type: 'line',
                         data: {
-                            labels: ['Krabby Patty', 'Krusty Combo', 'Krusty Deluxe'],
+                            labels: ['Krabby Pattie', 'Krusty Combo', 'Krusty Deluxe'],
                             datasets: [{
                                 label: 'Number of Grub Orders',
                                 data:[grubData.number_krabbypatty, grubData.number_krustycombo, grubData.number_krustydeluxe]

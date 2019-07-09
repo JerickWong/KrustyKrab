@@ -39,12 +39,20 @@
             </div>
             
             <script>
-                //getting date from timestamp
-                function getDate(timestamp){                    
-                    return timestamp.substring(0,10)
+                // getting date from timestamp
+                function getDate(timestamp){
+                    let dateArray = [];
+                    for(let i =0; i<timestamp.length; i++)
+                        dateArray[i] = timestamp[i].substring(0,10)
+                    return dateArray
                 }
+
+                // getting time from timestamp
                 function getTime(timestamp){
-                    return timestamp.substring(11,20)
+                    let timeArray = [];
+                    for(let i =0; i<timestamp.length; i++)
+                        timeArray[i] = timestamp[i].substring(11,20)
+                    return timeArray
                 }
 
                 // window.localStorage.removeItem("json");
@@ -65,39 +73,62 @@
                         let reader = new FileReader();
                         const self = this;
                         reader.onload = (event) => {
-                            console.log('FILE CONTENT', event.target.result);    
+                                
                             var object = JSON.parse(event.target.result)
+                            console.log('FILE CONTENT', object);
+                            var i           
 
-                            // if first time uploading a json file, create a new json file
-                            if (localStorage.getItem("json") == null) {
-                                let json = {
-                                    "timestamp": [object.timestamp],
-                                    "burgerBought": [object.burgerBought],
-                                    "customerSpecies": [object.customerSpecies]
-                                }
-                                let datetime = {
-                                    "date": [getDate(object.timestamp)],
-                                    "time": [getTime(object.timestamp)]
-                                }
-                                localStorage.setItem("json", JSON.stringify(json))
-                                localStorage.setItem("datetime", JSON.stringify(datetime))
-                                console.log("object: "+ object.timestamp)
-                                console.log("submitted")
+                            let tempSales = object.sales
+                            console.log("tempSales: " + tempSales)
+                            let tempTimestamp = tempSales.map(a => a.datetime)
+                            let tempBurger = tempSales.map(a => a.burger)
+                            let tempSpecies = tempSales.map(a => a.species)
 
-                                document.getElementById("confirmation").innerHTML = "Upload successful"
-                            }
-                            // else concatinate with the old json file
-                            else {
+                            let tempDate = getDate(tempTimestamp)
+                            let tempTime = getTime(tempTimestamp)
+
+                            // // if first time uploading a json file, create a new json file
+                            // if (localStorage.getItem("json") == null) {
+                            //     let json = {
+                            //         "timestamp": "",
+                            //         "burgerBought": "",
+                            //         "customerSpecies": ""
+                            //     }
+                            //     let datetime = {
+                            //         "date": "",
+                            //         "time": ""
+                            //     }
+                                
+                            //     json.timestamp = tempTimestamp
+                            //     json.burgerBought = tempBurger
+                            //     json.customerSpecies = tempSpecies
+                                
+                                
+                            //     console.log("tempDate: "+ tempDate)
+                            //     console.log("tempTime: " + tempTime)                                
+                            //     datetime.date = tempDate
+                            //     datetime.time = tempTime
+                                
+                            //     localStorage.setItem("json", JSON.stringify(json))
+                            //     localStorage.setItem("datetime", JSON.stringify(datetime))
+                            //     console.log("submitted")
+
+                            //     document.getElementById("confirmation").innerHTML = "Upload successful"
+                            // }
+                            // else 
+                            // else {
+
+                                // concatinate with the old json file
                                 var oldJSON = localStorage.getItem("json")
                                 var datetime = localStorage.getItem("datetime")
                                 var obj = JSON.parse(oldJSON)
                                 var datetimeobj = JSON.parse(datetime)
 
-                                obj.timestamp.push(object.timestamp)
-                                obj.burgerBought.push(object.burgerBought)
-                                obj.customerSpecies.push(object.customerSpecies)
-                                datetimeobj.date.push(getDate(object.timestamp))
-                                datetimeobj.time.push(getTime(object.timestamp))
+                                obj.timestamp.push.apply(tempTimestamp)
+                                obj.burgerBought.push.apply(tempBurger)
+                                obj.customerSpecies.push.apply(tempSpecies)
+                                datetimeobj.date.push.apply(tempDate)
+                                datetimeobj.time.push.apply(tempTime)
 
                                 localStorage.setItem("json", JSON.stringify(obj))
                                 localStorage.setItem("datetime", JSON.stringify(datetimeobj))
@@ -105,7 +136,7 @@
                                 console.log("may laman local storage")
 
                                 document.getElementById("confirmation").innerHTML = "Upload successful"
-                            }
+                            // }
                         };
                         reader.readAsText(file);
                     }
