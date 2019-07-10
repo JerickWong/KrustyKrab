@@ -20,6 +20,8 @@
             if (form.username.value == username && form.password.value == "p@ssword"){
                 self.location.href = page;
                 none = false
+                let logged = true
+                window.localStorage.setItem("logged", logged)
             } else {
                 alert("Either the username or password you entered is incorrect.\nPlease try again."); 
                 form.username.focus();

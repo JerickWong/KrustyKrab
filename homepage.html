@@ -25,7 +25,7 @@
             <li><a href="about.html">ABOUT MR. KRABS</a></li>
             <li><a href="upload.html">UPLOAD DATA</a></li>
         </ul>
-        <a href="index.html"><button type="button" id="btn-logout"><img src="assets/logout.png" id="img-logout">&nbsp;Log Out</button></a>
+        <button type="button" id="btn-logout"><img src="assets/logout.png" id="img-logout">&nbsp;Log Out</button>
     </nav>
     
     <div id="container">
@@ -54,6 +54,16 @@
         // request.send(null)
         // var data = JSON.parse(request.responseText);
 
+        // if user has not logged in yet, redirect to login page
+        if (window.localStorage.getItem("logged")==null) {
+            location.href = "index.html"
+        }
+        // logging out
+        document.getElementById("btn-logout").addEventListener("click", function(){
+            let logged = window.localStorage.removeItem("logged")            
+            location.href = "index.html"
+        })
+
         // getting date from timestamp
         function getDate(timestamp){
                     let dateArray = [];
@@ -62,14 +72,15 @@
                     return dateArray
                 }
 
-                // getting time from timestamp
-                function getTime(timestamp){
-                    let timeArray = [];
-                    for(let i =0; i<timestamp.length; i++)
-                        timeArray[i] = timestamp[i].substring(11,20)
-                    return timeArray
-                }
+        // getting time from timestamp
+        function getTime(timestamp){
+            let timeArray = [];
+            for(let i =0; i<timestamp.length; i++)
+                timeArray[i] = timestamp[i].substring(11,20)
+            return timeArray
+        }
 
+        // saves krustykrab_array.json from file to localStorage
         $.getJSON("krustykrab_array.json", function(data){
             let tempSales = data.sales
             console.log("tempSales: " + tempSales)
@@ -107,12 +118,13 @@
             
         })
 
-
+        // gets data from localStorage
         let data = localStorage.getItem("json")
         let dataObject = JSON.parse(data)
         let datetime = localStorage.getItem("datetime")
         let datetimeObject = JSON.parse(datetime)
 
+        // initialize all data needed to be displayed on the homepage charts
         let customerservedData = {
             "time" : [],
             "number_of_customers" : []
@@ -152,7 +164,8 @@
         dd = fix_format(dd)
         var dateString = today.getFullYear() + '-' + mm + '-' + dd        
         console.log(dateString)
-        // initialize data
+
+        // initialize data to charts
         var i
         for (i=0; i<dataObject.customerSpecies.length; i++) {
             if (dataObject.timestamp[i].includes(dateString)) {
@@ -206,7 +219,7 @@
         Chart.defaults.global.defaultFontColor = '#777';
 
         let CS_Chart = new Chart(customersservedChart, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: customerservedData.time,
                 datasets: [{
@@ -224,7 +237,7 @@
         });
 
         let GP_Chart = new Chart(grubpopularityChart, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: ['Krabby Pattie', 'Krusty Combo', 'Krusty Deluxe', ],
                 datasets: [{
@@ -244,7 +257,7 @@
         });
 
         let PS_Chart = new Chart(perspeciesChart, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: krabbyData.species,
                 datasets: [{
@@ -260,6 +273,7 @@
                 }
             }
         });
+        
     </script>
 
     

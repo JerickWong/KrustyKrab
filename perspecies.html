@@ -43,6 +43,16 @@
             </div>
     
             <script>
+                // if user has not logged in yet, redirect to login page
+                if (window.localStorage.getItem("logged")==null) {
+                    location.href = "index.html"
+                }
+                // logging out
+                document.getElementById("btn-logout").addEventListener("click", function(){
+                    let logged = window.localStorage.removeItem("logged")            
+                    location.href = "index.html"
+                })
+                
                 // loads data
                 let data = localStorage.getItem("json")
                 let dataObject = JSON.parse(data)
