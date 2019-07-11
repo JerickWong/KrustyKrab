@@ -1,6 +1,6 @@
 <html lang="en"><head>
     <link rel="stylesheet" href="upload.css">
-    <script src="jquery.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <!-- <script src="Node.js"></script> -->
     <title>Krusty Krab</title>
 </head>
@@ -26,7 +26,7 @@
             <a href="index.html"><button type="button" id="btn-logout"><img src="assets/logout.png" id="img-logout">&nbsp;Log Out</button></a> 
         </nav>
         <article class="content">
-            <p><h1>Upload JSON File</h1></p>
+            <h1>Upload JSON File</h1>
             <p><img id='bodyimg' src="view/krustykrab.jpg" alt="krustykrab"></p>
             <p id="msg">Help us improve Krusty Krab</p>
             <div class="upload">
@@ -96,36 +96,36 @@
                             let tempDate = getDate(tempTimestamp)
                             let tempTime = getTime(tempTimestamp)
 
-                            // // if first time uploading a json file, create a new json file
-                            // if (localStorage.getItem("json") == null) {
-                            //     let json = {
-                            //         "timestamp": "",
-                            //         "burgerBought": "",
-                            //         "customerSpecies": ""
-                            //     }
-                            //     let datetime = {
-                            //         "date": "",
-                            //         "time": ""
-                            //     }
+                            // if first time uploading a json file, create a new json file
+                            if (localStorage.getItem("json") == null) {
+                                let json = {
+                                    "timestamp": "",
+                                    "burgerBought": "",
+                                    "customerSpecies": ""
+                                }
+                                let datetime = {
+                                    "date": "",
+                                    "time": ""
+                                }
                                 
-                            //     json.timestamp = tempTimestamp
-                            //     json.burgerBought = tempBurger
-                            //     json.customerSpecies = tempSpecies
+                                json.timestamp = tempTimestamp
+                                json.burgerBought = tempBurger
+                                json.customerSpecies = tempSpecies
                                 
                                 
-                            //     console.log("tempDate: "+ tempDate)
-                            //     console.log("tempTime: " + tempTime)                                
-                            //     datetime.date = tempDate
-                            //     datetime.time = tempTime
+                                console.log("tempDate: "+ tempDate)
+                                console.log("tempTime: " + tempTime)                                
+                                datetime.date = tempDate
+                                datetime.time = tempTime
                                 
-                            //     localStorage.setItem("json", JSON.stringify(json))
-                            //     localStorage.setItem("datetime", JSON.stringify(datetime))
-                            //     console.log("submitted")
+                                localStorage.setItem("json", JSON.stringify(json))
+                                localStorage.setItem("datetime", JSON.stringify(datetime))
+                                console.log("submitted")
 
-                            //     document.getElementById("confirmation").innerHTML = "Upload successful"
-                            // }
-                            // else 
-                            // else {
+                                document.getElementById("confirmation").innerHTML = "Upload successful"
+                            }
+                            
+                            else {
 
                                 // concatinate with the old json file
                                 var oldJSON = localStorage.getItem("json")
@@ -145,7 +145,7 @@
                                 console.log("may laman local storage")
 
                                 document.getElementById("confirmation").innerHTML = "Upload successful"
-                            // }
+                            }
                         };
                         reader.readAsText(file);
                     }

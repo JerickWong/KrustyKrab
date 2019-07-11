@@ -22,10 +22,12 @@
                 <li><a href="about.html">ABOUT MR. KRABS</a></li>
                 <li><a href="upload.html">UPLOAD DATA</a></li>
             </ul>
+            <input onclick="generateTable()" type="button" value="Generate Table" id="btn-gen-table">
             <a href="index.html"><button type="button" id="btn-logout"><img src="assets/logout.png" id="img-logout">&nbsp;Log Out</button></a>
         </nav>
                 
         <div id="container">
+            <h2 id="cont-title">Grub Popularity</h2>
                 <div class="sortby">Search by Date: <input type="date" id="date" onchange="here()"></div>
                 
                 <div class="chartcontainer">
@@ -38,6 +40,11 @@
                 
             </div>
     
+        <div id="bigcontainer">
+            <div id="tablecontainer">
+            </div>
+        </div>
+        
             <script>          
                 // if user has not logged in yet, redirect to login page
                 if (window.localStorage.getItem("logged")==null) {
@@ -158,6 +165,35 @@
                         }                            
                     }
                 }
+                
+                function generateTable(){
+                let charts = document.getElementById("container")
+                let tables = document.getElementById("tablecontainer")
+                let genbutton = document.getElementById("btn-gen-table")
+                
+                if (charts.style.display == "none"){
+                    charts.style.display = "inline-block"
+                    tables.style.display = "none"
+                    genbutton.value="Generate Table"
+                } else {
+                    charts.style.display = "none"
+                    tables.style.display = "table"
+                    genbutton.value="Generate Chart"
+                }
+                
+                html = "<table> <tr><th>Time</th> <th>Customer Served</th> <th>Order</th> </tr><tr>";  
+                for (var i=0; i<dataObject.customerSpecies.length; i++) {
+                    
+                    html += "<tr><td>" + dataObject.timestamp[i]
+                    html += "</td><td>" + dataObject.customerSpecies[i]
+                    html += "</td><td>" + dataObject.burgerBought[i] + "</td></tr>"
+                }
+                html += "</tr></table>";
+
+            // ATTACH HTML TO CONTAINER
+            document.getElementById("tablecontainer").innerHTML = html;
+            }
+                
             </script>
     
     </div>

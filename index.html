@@ -7,6 +7,16 @@
     </head>
 <!--    New-->
     <script>
+        $(document).ready(()=>{
+            var input = document.getElementById("log-password");
+            input.addEventListener("keyup", function(event) {
+                if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("log-submit").click();
+                }
+            }); 
+        })
+        
         function Login(form) { 
             username = "admin"
             password = "p@ssword"
@@ -22,7 +32,8 @@
                 none = false
                 let logged = true
                 window.localStorage.setItem("logged", logged)
-            } else {
+            } 
+            else {
                 alert("Either the username or password you entered is incorrect.\nPlease try again."); 
                 form.username.focus();
             }
@@ -49,12 +60,12 @@
                     <br>
                 </div>
 
-                <div id="password">
+                <div>
                     <input type="password" id="log-password" placeholder="Your password" name="password">
                 <br>      
                 </div>
 <!--            New-->
-                <input type="button" value="Login" id="log-submit" onClick="Login(this.form)"><br>
+                <input type="button" value="Login" id="log-submit" key onClick="Login(this.form)"><br>
             </form> 
             
 <!--             to open to a new tab: target="_blank"-->

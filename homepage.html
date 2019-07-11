@@ -29,7 +29,7 @@
     </nav>
     
     <div id="container">
-        <div id="today"><h2>DATA FOR TODAY</h2></div>
+        <div id="today"><h2>DATA for today: <span id="date"></span></h2></div>
         <div class="chartcontainer">
             <canvas class="charts" id="customersserved"></canvas>
             <a href="customerserved.html">See more ></a>       
@@ -64,6 +64,12 @@
             location.href = "index.html"
         })
 
+        n =  new Date();
+        y = n.getFullYear();
+        m = n.getMonth() + 1;
+        d = n.getDate();
+        document.getElementById("date").innerHTML = m + "/" + d + "/" + y;
+        
         // getting date from timestamp
         function getDate(timestamp){
                     let dateArray = [];
@@ -83,7 +89,7 @@
         // saves krustykrab_array.json from file to localStorage
         $.getJSON("krustykrab_array.json", function(data){
             let tempSales = data.sales
-            console.log("tempSales: " + tempSales)
+            console.log("tempSales: " + tempSales)  
             let tempTimestamp = tempSales.map(a => a.datetime)
             let tempBurger = tempSales.map(a => a.burger)
             let tempSpecies = tempSales.map(a => a.species)
@@ -123,6 +129,8 @@
         let dataObject = JSON.parse(data)
         let datetime = localStorage.getItem("datetime")
         let datetimeObject = JSON.parse(datetime)
+        
+        console.log("dataObject species: " + dataObject.customerSpecies[0])
 
         // initialize all data needed to be displayed on the homepage charts
         let customerservedData = {

@@ -1,5 +1,5 @@
-{
-    "timestamp" : "2019-07-06 13:00:00",
-    "customerSpecies" : "Sponge",
-    "burgerBought" : "Krabby Patty"
-}
+"sales": [{
+	'datetime': '2019-05-27 08:02:58', 
+	'burger' : 'Krusty Combo', 
+	'species' : 'leatherback turtle'
+}]
