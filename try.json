@@ -1,0 +1,58 @@
+{
+    "sales": [{
+		"datetime": "2019-05-27 08:02:58", 
+		"burger" : "Krusty Combo", 
+		"species" : "leatherback turtle"
+	},{
+		"datetime": "2019-05-27 08:04:47", 
+		"burger" : "Krabby Pattie", 
+		"species" : "salmon"
+	},{
+		"datetime": "2019-05-27 08:06:37", 
+		"burger" : "Krusty Deluxe", 
+		"species" : "seahorse"
+	}],
+    "burger_sales": {
+        "Krusty Combo": 2304,
+        "Krusty Deluxe": 1522,
+        "Krabby Pattie": 6174
+      },
+    "species_sales": {
+        "leatherback turtle": 3215,
+        "salmon": 1519,
+        "seahorse": 1115,
+        "coral": 756,
+        "giant clam": 1119,
+        "gray whale": 376,
+        "sea lion": 1900
+      },
+    "burger_by_species": {
+        "Krusty Combo": {
+          "leatherback turtle": 736,
+          "salmon": 358,
+          "seahorse": 263,
+          "coral": 185,
+          "giant clam": 248,
+          "gray whale": 88,
+          "sea lion": 426
+        },
+        "Krabby Pattie": {
+          "leatherback turtle": 1961,
+          "salmon": 963,
+          "seahorse": 672,
+          "coral": 454,
+          "giant clam": 719,
+          "gray whale": 235,
+          "sea lion": 1170
+        },
+        "Krusty Deluxe": {
+          "leatherback turtle": 518,
+          "salmon": 198,
+          "seahorse": 180,
+          "coral": 117,
+          "giant clam": 152,
+          "gray whale": 53,
+          "sea lion": 304
+        }
+      }
+}

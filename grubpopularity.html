@@ -63,7 +63,7 @@
                 let datetimeObject = JSON.parse(datetime)
 
                 // fix data to charts according to date
-                function fix_data(chart, loaded, date) {
+                function fix_data(chart, loaded, date, init) {
                     var i
                     console.log("Date is: " + date)
                     chart.number_krabbypatty = []
@@ -71,7 +71,7 @@
                     chart.number_krustydeluxe = []                    
 
                     for (i=0; i<loaded.burgerBought.length; i++) {
-                        if (loaded.timestamp[i].includes(date)) {
+                        if (loaded.timestamp[i].includes(date) || init) {
                             if (loaded.burgerBought[i] == 'Krabby Pattie') {
                                 chart.number_krabbypatty++ 
                             } else if (loaded.burgerBought[i] == 'Krusty Combo') {
@@ -114,7 +114,7 @@
                 Chart.defaults.global.defaultFontColor = '#777';
                 
                 // initial data, current date
-                fix_data(grubData, dataObject, today.getFullYear()+'-'+mm+'-'+dd)
+                fix_data(grubData, dataObject, today.getFullYear()+'-'+mm+'-'+dd, true)
 
                 function show_data(){
                     let CS_Bar = new Chart(CSBar, {
@@ -154,15 +154,27 @@
                     });
                 }
                 
+                var moved = 0
                 // search data by date
                 document.getElementById("date").onchange = function() {
                     console.log("ginalaw mo ko!")
                     var searchDate = document.getElementById("date").value
-                    var i
+                    var i, no_data = true
+                    moved++
                     for (i=0; i<datetimeObject.date.length; i++) {
                         if (searchDate == datetimeObject.date[i]) {
-                            fix_data(grubData, dataObject, searchDate)
-                        }                            
+                            fix_data(grubData, dataObject, searchDate, false)
+                            no_data = false
+                        }    
+                        // if searching is done and there's no data, and the searchDate was moved 4 times (digit of years)
+                        if (i == datetimeObject.date.length-1 && no_data && moved % 4 == 0) {
+                            grubData.number_krabbypatty = 0
+                            grubData.number_krustycombo = 0
+                            grubData.number_krustydeluxe = 0
+                            
+                            alert("No data found in this date")
+                            show_data()
+                        }                         
                     }
                 }
                 

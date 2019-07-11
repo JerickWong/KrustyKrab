@@ -68,14 +68,14 @@
                 let datetimeObject = JSON.parse(datetime)
 
                 // fix data to charts according to date
-                function fix_data(chart, loaded, burger, date) {
+                function fix_data(chart, loaded, burger, date, init) {
                     var i
 
                     chart.species = []
                     chart.number_of_orders = []
                     
                     for (i=0; i<loaded.customerSpecies.length; i++) {
-                        if (loaded.timestamp[i].includes(date)) {
+                        if (loaded.timestamp[i].includes(date) || init) {
                             console.log("same date?")                            
                             if (loaded.burgerBought[i] == burger) {
                                 console.log("loaded burger: " + loaded.burgerBought[i] + " burger: " + burger)
@@ -145,9 +145,9 @@
                 Chart.defaults.global.defaultFontColor = '#777';
                 
                 // initial data, current date
-                fix_data(krabbyData, dataObject, "Krabby Pattie", today.getFullYear()+'-'+mm+'-'+dd)
-                fix_data(comboData, dataObject, "Krusty Combo", today.getFullYear()+'-'+mm+'-'+dd)
-                fix_data(deluxeData, dataObject, "Krusty Deluxe", today.getFullYear()+'-'+mm+'-'+dd)
+                fix_data(krabbyData, dataObject, "Krabby Pattie", today.getFullYear()+'-'+mm+'-'+dd, true)
+                fix_data(comboData, dataObject, "Krusty Combo", today.getFullYear()+'-'+mm+'-'+dd, true)
+                fix_data(deluxeData, dataObject, "Krusty Deluxe", today.getFullYear()+'-'+mm+'-'+dd, true)
                 
                 // shows data to charts
                 function show_data() {
@@ -207,12 +207,14 @@
                         }
                     });
                 }
-                                                
+
+                var moved = 0
                 // search data by date
                 document.getElementById("date").onchange = function() {
                     console.log("ginalaw mo ko!")
                     var searchDate = document.getElementById("date").value
-                    var i
+                    var i, no_data = true
+                    moved++                    
                     console.log("searchDate: "+searchDate)
 
                     for (i=0; i<datetimeObject.date.length; i++) {
@@ -220,10 +222,23 @@
                         // console.log("datetimeObj.date: " + datetimeObject.date[i] )
                         
                         if (searchDate == datetimeObject.date[i]) {
-                            fix_data(krabbyData, dataObject, "Krabby Pattie", searchDate)
-                            fix_data(comboData, dataObject, "Krusty Combo", searchDate)
-                            fix_data(deluxeData, dataObject, "Krusty Deluxe", searchDate)
-                        }                            
+                            fix_data(krabbyData, dataObject, "Krabby Pattie", searchDate, false)
+                            fix_data(comboData, dataObject, "Krusty Combo", searchDate, false)
+                            fix_data(deluxeData, dataObject, "Krusty Deluxe", searchDate, false)
+                            no_data = false
+                        }                  
+                        // if searching is done and there's no data, and the searchDate was moved 4 times (digit of years)
+                        if (i == datetimeObject.date.length-1 && no_data && moved % 4 == 0) {
+                            krabbyData.species = []
+                            krabbyData.number_of_orders = []
+                            comboData.species = []
+                            comboData.number_of_orders = []
+                            deluxeData.species = []
+                            deluxeData.number_of_orders = []
+                            
+                            alert("No data found in this date")
+                            show_data()
+                        }   
                     }
                 }
                 

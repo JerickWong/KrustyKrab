@@ -152,14 +152,25 @@
                 });
             }
             
+            var moved = 0
             // search data by date
             document.getElementById("date").onchange = function() {
                 console.log("ginalaw mo ko!")
                 var searchDate = document.getElementById("date").value
-                var i
+                var i, no_data = true
+                moved++
                 for (i=0; i<datetimeObject.date.length; i++) {
                     if (searchDate == datetimeObject.date[i]) {
                         fix_data(customerservedData, dataObject, datetimeObject, searchDate)
+                        no_data = false
+                    }    
+                    // if searching is done and there's no data, and the searchDate was moved 4 times (digit of years)
+                    if (i == datetimeObject.date.length-1 && no_data && moved % 4 == 0) {
+                        customerservedData.time = []
+                        customerservedData.number_of_customers = []
+                        
+                        alert("No data found in this date")
+                        show_data()
                     }                            
                 }
             }
